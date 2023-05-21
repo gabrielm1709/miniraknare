@@ -19,3 +19,13 @@ C:\Users\gabri\source\repos\miniraknare-main\miniräknare\obj\Debug\miniräknare
 C:\Users\gabri\source\repos\miniraknare-main\miniräknare\obj\Debug\miniräknare.csproj.CoreCompileInputs.cache
 C:\Users\gabri\source\repos\miniraknare-main\miniräknare\obj\Debug\miniräknare.exe
 C:\Users\gabri\source\repos\miniraknare-main\miniräknare\obj\Debug\miniräknare.pdb
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\bin\Debug\miniräknare.exe.config
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\bin\Debug\miniräknare.exe
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\bin\Debug\miniräknare.pdb
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\obj\Debug\miniräknare.csprojAssemblyReference.cache
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\obj\Debug\miniräknare.Form1.resources
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\obj\Debug\miniräknare.Properties.Resources.resources
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\obj\Debug\miniräknare.csproj.GenerateResource.cache
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\obj\Debug\miniräknare.csproj.CoreCompileInputs.cache
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\obj\Debug\miniräknare.exe
+C:\Users\gabriel.morck\source\repos\miniraknare-main (2)\miniraknare-main\miniräknare\obj\Debug\miniräknare.pdb

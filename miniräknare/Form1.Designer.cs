@@ -451,11 +451,11 @@
             // 
             // button29
             // 
-            this.button29.BackColor = System.Drawing.Color.Silver;
+            this.button29.BackColor = System.Drawing.Color.SteelBlue;
             this.button29.FlatAppearance.BorderSize = 0;
             this.button29.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button29.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button29.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button29.Location = new System.Drawing.Point(8, 404);
             this.button29.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.button29.Name = "button29";

@@ -13,15 +13,99 @@ namespace miniräknare
     public partial class Form1 : Form
     {
         string equation = "";
-        int degree = 1;
+        bool degree = true;
+        double calculateDegree = Math.PI / 180;
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void updateBox() 
+        // y = ax^2 + px + q -> PQ(a, p, q)
+        private string PQFormula(double a, double p, double q)
         {
-            equation = textBox1.Text;
+            if (a == 0)
+            {
+                return "error";
+            }
+
+            double solution = -(p / (a * 2)) + Math.Sqrt(Math.Pow(p / (a * 2), 2) - q);
+
+            return solution.ToString();
+        }
+
+        private string getResult(string subEquation, string function)
+        {
+            switch (function)
+            {
+                case "sin":
+                    return Math.Sin(double.Parse(calculate(subEquation)) * calculateDegree).ToString();
+                case "cos":
+                    return Math.Cos(double.Parse(calculate(subEquation)) * calculateDegree).ToString();
+                case "tan":
+                    return Math.Tan(double.Parse(calculate(subEquation)) * calculateDegree).ToString();
+                case "PQ":
+                    subEquation = subEquation.Replace('(', ' ').Replace(')', ' ');
+                    return PQFormula(double.Parse(subEquation.Split(',')[0]), double.Parse(subEquation.Split(',')[1]), double.Parse(subEquation.Split(',')[2]));
+                case "e^":
+                    return Math.Exp(double.Parse(calculate(subEquation))).ToString();
+                case "√": 
+                    return Math.Sqrt(double.Parse(calculate(subEquation))).ToString();
+
+                default:
+                    return "error";
+            }
+        }
+
+        private string calculate(string eq)
+        {
+            return new DataTable().Compute(eq.Replace(',', '.'), null).ToString();
+        }
+
+        private string parseParenthesis(string inputEquation)
+        {
+            string[] functionList = new string[] { "sin", "cos", "tan", "PQ", "e^" , "√" };
+            int i = 0;
+            while (i < inputEquation.Length)
+            {
+                string subEquation = "";
+                int parenthesisLevel = 0;
+                foreach (string function in functionList)
+                {
+                    if (inputEquation.Length > i + function.Length && inputEquation.Substring(i, function.Length).ToString() == function)
+                    {
+                        i += function.Length;
+                        while (i < inputEquation.Length)
+                        {
+                            subEquation += inputEquation[i];
+
+                            if (inputEquation[i] == ')' && parenthesisLevel == 1)
+                            {
+                                break;
+                            }
+                            if (inputEquation[i] == ')' && parenthesisLevel > 1)
+                            {
+                                parenthesisLevel -= 1;
+                            }
+                            if (inputEquation[i] == '(')
+                            {
+                                parenthesisLevel += 1;
+                            }
+                            i += 1;
+                        }
+
+                        string replace = getResult(subEquation, function);
+                        string toReplace = $"{function}{subEquation}";
+
+                        inputEquation = inputEquation.Replace(toReplace, replace);
+                        i += (replace.Length - toReplace.Length);
+                    }
+                }
+                i += 1;
+            }
+
+
+
+            return inputEquation;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -87,77 +171,12 @@ namespace miniräknare
         private void button15_Click(object sender, EventArgs e)
         {
             textBox1.Text += "0";
-            
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             // Clear
             textBox1.Text = "";
-            
-        }
-
-        private string calculate(string eq) 
-        {
-            return new DataTable().Compute(eq, null).ToString();
-        }
-
-        private string parseParenthesis(int idx, string inputEquation) 
-        {
-            string[] trig = new string[] { "sin", "cos", "tan", "PQ" };
-            string subEquation = "";
-            for (int i = idx; i < inputEquation.Length; i++)
-            {
-
-                int parenthesisLevel = 0;
-                subEquation = "";
-                foreach (string function in trig)
-                {
-                    if (inputEquation.Length > i + function.Length && inputEquation.Substring(i, function.Length).ToString() == function)
-                    {
-                        i += function.Length;
-                        while (i < inputEquation.Length)
-                        {
-                            subEquation += equation[i];
-
-
-                            if (inputEquation[i] == ')' && parenthesisLevel == 1)
-                            {
-                                break;
-                            }
-                            if (inputEquation[i] == ')' && parenthesisLevel > 1)
-                            {
-                                parenthesisLevel -= 1;
-                            }
-                            if (inputEquation[i] == '(')
-                            {
-                                parenthesisLevel += 1;
-                            }
-                            i += 1;
-                        }
-
-                        string replace = "";
-                        string toReplace = $"{function}{subEquation}";
-                        try
-                        {
-                            replace = getFunction(subEquation, function);
-                        }
-                        catch
-                        {
-                            subEquation = parseParenthesis(1, subEquation);
-                        }
-
-
-                        inputEquation = inputEquation.Replace(toReplace, replace);
-                        i += (replace.Length - toReplace.Length);
-
-                    }
-                }
-            }
-          
-            
-
-            return inputEquation;
         }
 
         private void button29_Click(object sender, EventArgs e)
@@ -166,81 +185,39 @@ namespace miniräknare
             // Räkna ut buffer.
             equation = textBox1.Text;
             equation = equation.Replace("π", Math.PI.ToString());
-            equation = parseParenthesis(0, equation);
-           
-            textBox1.Text = calculate(equation.Replace(',', '.'));
+            equation = parseParenthesis(equation);
 
-            updateBox();
-             
-            
-           
+            try 
+            {
+                textBox1.Text = calculate(equation);
+                equation = textBox1.Text;
+            }
+            catch 
+            {
+                textBox1.Text = "error";
+            }
         }
    
-        private string getFunction(string subEquation, string function) 
-        {
-            switch (function) 
-            {
-                case "sin":
-                    return Math.Sin(double.Parse(calculate(subEquation))).ToString();
-                case "cos":
-                    return Math.Cos(double.Parse(calculate(subEquation))).ToString();
-                case "tan":
-                    return Math.Tan(double.Parse(calculate(subEquation))).ToString();
-                case "PQ":
-                    subEquation = subEquation.Replace('(', ' ').Replace(')', ' ');
-                    return PQFormula(double.Parse(subEquation.Split(',')[0]), double.Parse(subEquation.Split(',')[1]), double.Parse(subEquation.Split(',')[2]));
-               
-
-                default:
-                    return "error";
-            }
-        }
+        
         private void button28_Click(object sender, EventArgs e)
         {
-            equation += "sin(";
-            updateBox();
+            textBox1.Text += "sin(";
         }
-
-        private string PQFormula(double num1, double num2, double num3) 
-        {
-            if(num1 == 0) 
-            {
-                return "error";
-            }
-
-            double sol1 = -(num2 / (num1 * 2)) + Math.Sqrt(Math.Pow(num2 / (num1 * 2), 2) - num3);
-            double sol2 = -(num2 / (num1 * 2)) - Math.Sqrt(Math.Pow(num2 / (num1 * 2), 2) - num3);
-            
-
-            return sol1.ToString();
-        }
-
+       
         private void button27_Click(object sender, EventArgs e)
         {
             textBox1.Text += "cos(";
-            
         }
 
         private void button26_Click(object sender, EventArgs e)
         {
             textBox1.Text += "tan(";
-            
         }
 
         private void button23_Click(object sender, EventArgs e)
         {
-            textBox1.Text += "Cr(";
+            textBox1.Text += "e^(";
             
-        }
-
-        private void button22_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "Pr(";
-        }
-
-        private void button21_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "MOD(";
         }
 
         private void button24_Click(object sender, EventArgs e)
@@ -291,6 +268,50 @@ namespace miniräknare
         private void button14_Click(object sender, EventArgs e)
         {
             textBox1.Text += ",";
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            if(textBox1.Text.Length > 0) 
+            {
+                textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1);
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            textBox1.Text += ".";
+        }
+
+        private void button21_Click_1(object sender, EventArgs e)
+        {
+            if (degree) 
+            {
+                calculateDegree = 1;
+                button21.Text = "RADIANS";
+                degree = false;
+            }
+            else 
+            {
+                degree = true;
+                calculateDegree = Math.PI / 180;
+                button21.Text = "DEGREE";
+            }
+        }
+
+        private void button22_Click_1(object sender, EventArgs e)
+        {
+            textBox1.Text += "ln(";
+        }
+
+        private void button22_Click_2(object sender, EventArgs e)
+        {
+            textBox1.Text += equation;
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            textBox1.Text += "√(";
         }
     }
 }

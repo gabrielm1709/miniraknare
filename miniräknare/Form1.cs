@@ -14,7 +14,9 @@ namespace miniräknare
     {
         string equation = "";
         bool degree = true;
+        // Omvandla radianer till grader.
         double calculateDegree = Math.PI / 180;
+
         public Form1()
         {
             InitializeComponent();
@@ -65,6 +67,7 @@ namespace miniräknare
         {
             string[] functionList = new string[] { "sin", "cos", "tan", "PQ", "e^" , "√" };
             int i = 0;
+            // Kolla om input innehåller några specialfunktioner och räkna då ut värdet. 
             while (i < inputEquation.Length)
             {
                 string subEquation = "";
@@ -78,24 +81,21 @@ namespace miniräknare
                         {
                             subEquation += inputEquation[i];
 
-                            if (inputEquation[i] == ')' && parenthesisLevel == 1)
-                            {
-                                break;
-                            }
-                            if (inputEquation[i] == ')' && parenthesisLevel > 1)
-                            {
-                                parenthesisLevel -= 1;
-                            }
                             if (inputEquation[i] == '(')
                             {
                                 parenthesisLevel += 1;
+                            }
+                            if (inputEquation[i] == ')')
+                            {
+                                if (parenthesisLevel == 1) { break; }
+                                 
+                                parenthesisLevel -= 1;
                             }
                             i += 1;
                         }
 
                         string replace = getResult(subEquation, function);
                         string toReplace = $"{function}{subEquation}";
-
                         inputEquation = inputEquation.Replace(toReplace, replace);
                         i += (replace.Length - toReplace.Length);
                     }
@@ -103,27 +103,22 @@ namespace miniräknare
                 i += 1;
             }
 
-
-
             return inputEquation;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             textBox1.Text += "1";
-            
         }
 
         private void button2_Click(object sender, EventArgs e) 
         {
             textBox1.Text += "2";
-            
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
             textBox1.Text += "2";
-            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -174,8 +169,7 @@ namespace miniräknare
 
         private void button29_Click(object sender, EventArgs e)
         {
-            
-            // Räkna ut buffer.
+            // Räkna ut input.
             equation = textBox1.Text;
             equation = equation.Replace("π", Math.PI.ToString());
             equation = parseParenthesis(equation);
@@ -210,17 +204,11 @@ namespace miniräknare
         private void button23_Click(object sender, EventArgs e)
         {
             textBox1.Text += "e^(";
-            
         }
 
         private void button24_Click(object sender, EventArgs e)
         {
             textBox1.Text += "π";
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -306,5 +294,7 @@ namespace miniräknare
         {
             textBox1.Text += "√(";
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
     }
 }

@@ -105,174 +105,59 @@ namespace miniräknare
 
             return inputEquation;
         }
+      
 
-        private void button1_Click(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
+
+        private void add_to_input(object sender, EventArgs e)
         {
-            textBox1.Text += "1";
+            Button button = (Button)sender;
+            textBox1.Text += button.Text;  
         }
 
-        private void button2_Click(object sender, EventArgs e) 
+        private void square_input(object sender, EventArgs e)
         {
-            textBox1.Text += "2";
+            textBox1.Text += "√(";
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void add_previous(object sender, EventArgs e)
         {
-            textBox1.Text += "2";
+            textBox1.Text += equation;
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "3";
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "4";
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "5";
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "6";
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "7";
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "8";
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "9";
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "0";
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            // Clear
-            textBox1.Text = "";
-        }
-
-        private void button29_Click(object sender, EventArgs e)
+        private void button_calculate(object sender, EventArgs e)
         {
             // Räkna ut input.
             equation = textBox1.Text;
             equation = equation.Replace("π", Math.PI.ToString());
             equation = parseParenthesis(equation);
 
-            try 
+            try
             {
                 textBox1.Text = calculate(equation);
                 equation = textBox1.Text;
             }
-            catch 
+            catch
             {
                 textBox1.Text = "error";
             }
         }
-   
-        
-        private void button28_Click(object sender, EventArgs e)
+
+        private void button_clear(object sender, EventArgs e)
         {
-            textBox1.Text += "sin(";
-        }
-       
-        private void button27_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "cos(";
+            // Clear
+            textBox1.Text = "";
         }
 
-        private void button26_Click(object sender, EventArgs e)
+        private void button_switch_degree(object sender, EventArgs e)
         {
-            textBox1.Text += "tan(";
-        }
-
-        private void button23_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "e^(";
-        }
-
-        private void button24_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "π";
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "+";
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "-";
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "*";
-        }
-
-        private void button17_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "/";
-        }
-
-        private void button20_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "(";
-        }
-
-        private void button19_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += ")";
-        }
-
-        private void button25_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += "PQ(";
-        }
-
-        private void button14_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += ",";
-        }
-
-        private void button18_Click(object sender, EventArgs e)
-        {
-            if(textBox1.Text.Length > 0) 
-            {
-                textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1);
-            }
-        }
-
-        private void button16_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += ".";
-        }
-
-        private void button21_Click_1(object sender, EventArgs e)
-        {
-            if (degree) 
+            if (degree)
             {
                 calculateDegree = 1;
                 button21.Text = "RADIANS";
                 degree = false;
             }
-            else 
+            else
             {
                 degree = true;
                 calculateDegree = Math.PI / 180;
@@ -280,21 +165,37 @@ namespace miniräknare
             }
         }
 
-        private void button22_Click_1(object sender, EventArgs e)
+        private void button_erase(object sender, EventArgs e)
         {
-            textBox1.Text += "ln(";
+            if (textBox1.Text.Length > 0)
+            {
+                textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1);
+            }
         }
 
-        private void button22_Click_2(object sender, EventArgs e)
+        private void button_exponential(object sender, EventArgs e)
         {
-            textBox1.Text += equation;
+            textBox1.Text += "e^(";
         }
 
-        private void button30_Click(object sender, EventArgs e)
+        private void button_pq_solver(object sender, EventArgs e)
         {
-            textBox1.Text += "√(";
+            textBox1.Text += "PQ(";
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e) { }
+        private void button_sin(object sender, EventArgs e)
+        {
+            textBox1.Text += "sin(";
+        }
+
+        private void button_cos(object sender, EventArgs e)
+        {
+            textBox1.Text += "cos(";
+        }
+
+        private void button_tan(object sender, EventArgs e)
+        {
+            textBox1.Text += "tan(";
+        }
     }
 }
